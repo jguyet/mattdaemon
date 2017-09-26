@@ -85,7 +85,8 @@ void Server::listenInit()
 	if ((listen(this->sock, 3)) == -1)
 		throw ServerCantListenOnSocket();
 	Tintin_reporter::instance()->log("Server started on port " + std::to_string(this->listenPort));
-	this->statistics->set_start_time(0);
+	this->statistics->update_start_time();
 	this->waitClients();
-	this->statistics->set_end_time(0);
+	this->statistics->update_end_time();
+	Tintin_reporter::instance()->log("COUCOU");
 }

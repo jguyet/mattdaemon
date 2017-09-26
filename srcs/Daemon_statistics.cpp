@@ -46,6 +46,22 @@ std::ostream &				operator<<(std::ostream & o, Daemon_statistics const & i)
 
 // PUBLIC METHOD #################################################
 
+void	Daemon_statistics::update_start_time( void )
+{
+	struct timeval tv;
+
+	gettimeofday(&tv, NULL);
+	this->start_time = tv.tv_usec;
+}
+
+void	Daemon_statistics::update_end_time( void )
+{
+	struct timeval tv;
+
+	gettimeofday(&tv, NULL);
+	this->end_time = tv.tv_usec;
+}
+
 int		Daemon_statistics::get_number_of_message_received( void )
 {
 	return (this->number_of_message_received);
