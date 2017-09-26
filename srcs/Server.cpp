@@ -87,6 +87,10 @@ void Server::listenInit()
 	Tintin_reporter::instance()->log("Server started on port " + std::to_string(this->listenPort));
 	this->statistics->update_start_time();
 	this->waitClients();
+}
+
+void Server::close( void )
+{
 	this->statistics->update_end_time();
-	Tintin_reporter::instance()->log("COUCOU");
+	Tintin_reporter::instance()->log(this->statistics->to_string());
 }

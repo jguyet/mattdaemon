@@ -66,6 +66,7 @@ class Daemon
 	private:
 	Tintin_reporter	logger;
 	Flags			*flags;
+	Server			*server;
 };
 
 #endif

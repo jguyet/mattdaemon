@@ -3,6 +3,7 @@
 Daemon::Daemon (Flags *flags)
 {
 	this->flags = flags;
+	this->server = NULL;
 	Tintin_reporter *instance = Tintin_reporter::instance();
 	this->logger = *instance;
 	if (this->flags->getFlag("help")) {
@@ -53,6 +54,10 @@ void	Daemon::handleSignal(int signal)
 	LockFile *lockFile = Daemon::getLockFile();
 	Tintin_reporter::instance()->log("Received signal " + std::to_string(signal) + " and exited the daemon..");
 
+	if (this->server != NULL) {
+		this->server->close();
+	}
+
 	if (lockFile) {
 		delete lockFile;
 	}
@@ -66,11 +71,12 @@ void	Daemon::startDaemon()
 	int		current_pid = getpid();
 	LockFile *lockFile = Daemon::getLockFile();
 
+	this->server = &server;
 	chdir("/");
 	this->logger.log("Daemon started with PID " + std::to_string(current_pid));
 	for (int i = 1 ; i < _NSIG; i++)
 		signal(i, Daemon::handleSignal);
-	server.listenInit();
+	this->server->listenInit();
 }
 
 void	Daemon::initFork()

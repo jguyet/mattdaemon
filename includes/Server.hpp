@@ -25,6 +25,7 @@ class Server
 		void				readClients();
 		void				removeClient(Client *client);
 		Daemon_statistics	*get_statistics( void );
+		void				close( void );
 
 		struct ServerCantCreateSocket : public std::exception {
 			ServerCantCreateSocket() { Tintin_reporter::instance()->log("Exception raised: " + std::string(this->what())); }
