@@ -6,6 +6,8 @@
 #ifndef DAEMON_STATISTICS_HPP
 # define DAEMON_STATISTICS_HPP
 
+#include "all.hpp"
+
 class Daemon_statistics
 {
 	public:
@@ -19,12 +21,13 @@ class Daemon_statistics
 
 		int		get_number_of_message_received( void );
 		int		get_number_of_connection_accepted( void );
-		long	get_start_time( void );
-		long	get_end_time( void );
-		void	set_number_of_message_received( int n );
-		void	set_number_of_connection_accepted( int n );
-		void	set_start_time( long time );
-		void	set_end_time( long time );
+		long		get_start_time( void );
+		long		get_end_time( void );
+		void		set_number_of_message_received( int n );
+		void		set_number_of_connection_accepted( int n );
+		void		set_start_time( long time );
+		void		set_end_time( long time );
+		std::string	to_string( void );
 
 	private:
 	// PRIVATE METHOD ################################################

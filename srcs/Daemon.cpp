@@ -1,4 +1,4 @@
-#include "Daemon.hpp"
+#include "daemon.hpp"
 
 Daemon::Daemon (Flags *flags)
 {

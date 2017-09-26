@@ -86,9 +86,10 @@ void	Daemon_statistics::set_end_time( long time )
 	this->end_time = time;
 }
 
+
 std::string	Daemon_statistics::to_string( void )
 {
-	long n_up_time = this->end_time - this->start_time;
+	/*long n_up_time = this->end_time - this->start_time;
 	char uptime[80];
 	time_t rawtime;
 	struct tm *timeinfo;
@@ -98,12 +99,9 @@ std::string	Daemon_statistics::to_string( void )
 	strftime(uptime,sizeof(uptime),"%d-%m-%Y %I:%M:%S", timeinfo);
 	std::string str(uptime);
 
-	std::string s = "Deamon statistics :" << std::endl
-		<< "Total received message     : " << this->number_of_message_received
-		<< "Total connection accept    : " << this->number_of_connection_accepted
-		<< "Deamon total uptime        : " << uptime;
-
-	return (s);
+	std::string s = "Deamon statistics :" << std::endl << "Total received message     : " << this->number_of_message_received << "Total connection accept    : " << this->number_of_connection_accepted << "Deamon total uptime        : " << uptime;
+	return (s);*/
+	return ("");
 }
 
 // ###############################################################
