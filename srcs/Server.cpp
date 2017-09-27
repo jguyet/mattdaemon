@@ -89,7 +89,7 @@ void Server::listenInit()
 	this->waitClients();
 }
 
-void Server::close( void )
+void Server::closeServer( void )
 {
 	this->statistics->update_end_time();
 	Tintin_reporter::instance()->log(this->statistics->to_string());

@@ -49,13 +49,28 @@ LockFile *Daemon::getLockFile()
 	}
 }
 
+
+Server	*Daemon::getServer(int port)
+{
+	static Server	*server;
+
+	if (!server && port != -1) {
+		server = new Server(port);
+	}
+	return (server);
+}
+
+
 void	Daemon::handleSignal(int signal)
 {
-	LockFile *lockFile = Daemon::getLockFile();
-	Tintin_reporter::instance()->log("Received signal " + std::to_string(signal) + " and exited the daemon..");
+	LockFile	*lockFile = Daemon::getLockFile();
+	Server		*server = Daemon::getServer(-1);
 
-	if (this->server != NULL) {
-		this->server->close();
+	Tintin_reporter::instance()->log("Received signal " + std::to_string(signal) + " and exited the daemon..");
+	
+	if (server) {
+		server->closeServer();
+		delete server;
 	}
 
 	if (lockFile) {
@@ -66,17 +81,16 @@ void	Daemon::handleSignal(int signal)
 
 void	Daemon::startDaemon()
 {
-	Flag	*customPort = this->flags->getFlag("custom_port");
-	Server	server((customPort && customPort->value.size() > 0) ? std::stoi(customPort->value) : 4242);
+	Flag		*customPort = this->flags->getFlag("custom_port");
+	Server		*server = Daemon::getServer((customPort && customPort->value.size() > 0) ? std::stoi(customPort->value) : 4242);
 	int		current_pid = getpid();
-	LockFile *lockFile = Daemon::getLockFile();
+	LockFile	*lockFile =Daemon::getLockFile();
 
-	this->server = &server;
 	chdir("/");
 	this->logger.log("Daemon started with PID " + std::to_string(current_pid));
 	for (int i = 1 ; i < _NSIG; i++)
 		signal(i, Daemon::handleSignal);
-	this->server->listenInit();
+	server->listenInit();
 }
 
 void	Daemon::initFork()
